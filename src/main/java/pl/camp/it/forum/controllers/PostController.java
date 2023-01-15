@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.camp.it.forum.exceptions.NotEnoughtPostException;
 import pl.camp.it.forum.model.Post;
 import pl.camp.it.forum.model.Title;
 import pl.camp.it.forum.sequence.IPostIdSequence;
@@ -24,14 +25,13 @@ public class PostController {
     IPostService postService;
     @Autowired
     ITitleService titleService;
-    @Autowired
-    IPostIdSequence postIdSequence;
+
     @Autowired
     ITitleIdSequence titleIdSequence;
 
 
     @RequestMapping(path = "/post/show/{titleId}", method = RequestMethod.GET)
-    public String showPost(@PathVariable int titleId, Model model) {
+    public String showPost(Model model, @PathVariable int titleId) {
         Optional<Title> titleBox = this.titleService.getTitleById(titleId);
         if (titleBox.isEmpty()) {
             return "redirect:/";
@@ -58,6 +58,49 @@ public class PostController {
         return "redirect:/";
     }
 
+    @RequestMapping(path = "/title/remove/{titleId}", method = RequestMethod.GET)
+    public String removeTitle(Model model , @PathVariable int titleId){
+        model.addAttribute("sessionObject", this.sessionObject);
+        this.titleService.removeTitle(titleId);
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = "/title/edit/{titleId}", method = RequestMethod.GET)
+    public String editTitle(Model model , @PathVariable int titleId){
+        Optional<Title> titleBox = this.titleService.getTitleById(titleId);
+        if (titleBox.isEmpty()) {
+            return "redirect:/";
+        }
+        model.addAttribute("title", titleBox.get());
+        model.addAttribute("sessionObject", this.sessionObject);
+        return "editTitle";
+    }
+
+    @RequestMapping(path = "/title/edit/{titleId}", method = RequestMethod.POST)
+    public String editTitle(@ModelAttribute Title title, @PathVariable int titleId){
+        this.titleService.editTitle(title, titleId);
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = "/post/edit/{postId}", method = RequestMethod.GET)
+    public String editPost(Model model , @PathVariable int postId){
+        Optional<Post> postBox = this.postService.getPostById(postId);
+        Optional<Title> titleBox = this.titleService.getTitleById(postBox.get().getTitleId());
+        if (postBox.isEmpty() && titleBox.isEmpty()) {
+            return "redirect:/";
+        }
+        model.addAttribute("title", titleBox.get());
+        model.addAttribute("post", postBox.get());
+        model.addAttribute("sessionObject", this.sessionObject);
+        return "postForm";
+    }
+
+    @RequestMapping(path = "/post/edit/{postId}", method = RequestMethod.POST)
+    public String editPost(@ModelAttribute Post post, @PathVariable int postId){
+    this.postService.editPost(post, postId);
+        return "redirect:/";
+    }
+
     @RequestMapping(path = "/post/add/{titleId}", method = RequestMethod.GET)
     public String addPost(Model model, @PathVariable int titleId){
     Optional<Title> titleBox = this.titleService.getTitleById(titleId);
@@ -73,6 +116,12 @@ public class PostController {
     @RequestMapping(path = "/post/add/{titleId}", method = RequestMethod.POST)
     public String addPost(@ModelAttribute Post post, @PathVariable int titleId){
         this.postService.addPost(post, titleId, this.sessionObject.getUser().getId());
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = "/post/remove/{postId}", method = RequestMethod.GET)
+    public String removePost(Model model , @PathVariable int postId){
+        this.postService.removePost(postId);
         return "redirect:/";
     }
 }

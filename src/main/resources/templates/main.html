@@ -14,11 +14,11 @@
 
     <div>Temat</div>
     <div th:each="title : ${titles}" >
-    <a  th:text="${title.name}" th:href="@{/post/show/{titleId}(titleId=${title.id})}" class="button" ></a>
-    <a th:if="${this.sessionObject.isLogged}" href="/title/delete/" class="button">Usuń temat</a>
-    <a th:if="${this.sessionObject.isLogged}" href="/title/edit/" class="button">Edytuj temat</a>
+    <a th:text="${title.name}" th:href="@{/post/show/{titleId}(titleId=${title.id})}" class="button" ></a>
+    <a th:if="${sessionObject.isModerator()}" th:href="@{/title/remove/{titleId}(titleId=${title.id})}" class="button">Usuń temat</a>
+    <a th:if="${sessionObject.isModerator()}" th:href="@{/title/edit/{titleId}(titleId=${title.id})}" class="button">Edytuj temat</a>
     </div>
-    <a th:if="${this.sessionObject.isLogged}" href="/title/add/" class="button">Dodaj temat</a>
+    <a th:if="${sessionObject.isLogged()}" href="/title/add/" class="button">Dodaj temat</a>
 
 </div>
 

@@ -3,12 +3,12 @@ package pl.camp.it.forum.database.memory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.camp.it.forum.database.IPostDAO;
+import pl.camp.it.forum.exceptions.NotEnoughtPostException;
 import pl.camp.it.forum.model.Post;
 import pl.camp.it.forum.sequence.IPostIdSequence;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class PostDB implements IPostDAO {
@@ -55,29 +55,25 @@ public class PostDB implements IPostDAO {
         post.setDate(LocalDateTime.now());
         post.setTitleId(titleId);
         post.setUserId(userId);
-    this.posts.add(post);
+        this.posts.add(post);
     }
 
     @Override
     public void editPost(Post post) {
-
+        Optional<Post> postBox = this.getPostById(post.getId());
+        if (postBox.isPresent() && postBox.get().getId() == post.getId()) {
+            postBox.get().setContent(post.getContent());
+        }
     }
 
     @Override
     public List<Post> getPostByTitle(String title) {
-       /* List<Post> postsByTitle = new ArrayList<>();
-        for(Post post : this.posts){
-            if(Topic.getTitle().equals(title)){
-                postsByTitle.add(post);
-            }
-        }*/
-        return /*postsByTitle*/ null;
+        return null;
     }
 
     @Override
     public List<Post> getPostByTitleId(int titleId) {
         List<Post> postList = new ArrayList<>();
-
         for (Post post : this.posts) {
             if (post.getTitleId() == titleId) {
                 postList.add(post);
@@ -87,11 +83,33 @@ public class PostDB implements IPostDAO {
     }
 
     @Override
-    public void addFirstPost(Post post, int userId, int titleId) {
-    post.setId(postIdSequence.getId());
-    post.setUserId(userId);
-    post.setDate(LocalDateTime.now());
-    post.setTitleId(titleId);
-    this.posts.add(post);
+    public void removePost(int id) {
+        Optional<Post> postBox = getPostById(id);
+        List<Post> postList = new ArrayList<>();
+        if (postBox.isPresent() && getPostByTitleId(postBox.get().getTitleId()).size() >= 2) {
+            this.posts.remove(postBox.get());
+        }
+    }
+
+    @Override
+    public void removePostByTitleId(int titleId) {
+        List<Post> postList = getPostByTitleId(titleId);
+        Iterator<Post> iterator = this.posts.iterator();
+        while (iterator.hasNext()) {
+            Post postFromDB = iterator.next();
+            if (postFromDB.getTitleId() == titleId) {
+                iterator.remove();
+            }
+        }
+    }
+
+    @Override
+    public Optional<Post> getPostById(int id) {
+        for (Post post : posts) {
+            if (post.getId() == id) {
+                return Optional.of(post);
+            }
+        }
+        return Optional.empty();
     }
 }

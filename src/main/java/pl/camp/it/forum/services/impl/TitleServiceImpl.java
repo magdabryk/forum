@@ -35,4 +35,15 @@ public class TitleServiceImpl implements ITitleService {
     public void addTitle(Title title) {
         this.titleDAO.addTitle(title);
     }
+
+    @Override
+    public void removeTitle(int id) {
+        this.titleDAO.removeTitle(id);
+    }
+
+    @Override
+    public void editTitle(Title title, int titleId) {
+        title.setId(titleId);
+        this.titleDAO.editTitle(title);
+    }
 }

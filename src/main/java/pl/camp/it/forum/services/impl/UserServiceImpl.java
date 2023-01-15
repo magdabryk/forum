@@ -40,6 +40,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<User> getUserList() {
-        return null;
+        return this.userDAO.getUserList();
     }
 }

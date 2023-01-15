@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Forum dyskusyjne Klubu Dyskutantów</title>
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/post.css">
+</head>
+<body>
+<div th:replace="~{fragments.html :: logo}"></div>
+<div th:replace="~{fragments.html :: menu}"></div>
+
+
+<div id="content">
+  <form method="post" id="form" >
+    <div>
+      <input type="text" placeholder="Tytuł postu" class="text-input" th:field="*{title.name}">
+    </div>
+       <input type="submit" class="button" placeholder="OK">
+  </form>
+</div>
+
+</body>
+</html>

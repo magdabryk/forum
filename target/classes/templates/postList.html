@@ -18,9 +18,12 @@
     <div th:text="${post.userId}"></div>
       </div>
     <div th:text="${post.content}" class="post-content"></div>
+        <a th:href="@{/post/edit/{postId}(postId=${post.getId})}" class="button">Edytuj post</a>
+        <a th:href="@{/post/remove/{postId}(postId=${post.getId})}" class="button">Usuń post</a>
 
     </div>
     <a th:href="@{/post/add/{titleId}(titleId=${titles.getId})}" class="button">Dodaj post</a>
+
 </div>
 
 </body>

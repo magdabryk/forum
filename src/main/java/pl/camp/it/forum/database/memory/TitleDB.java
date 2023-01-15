@@ -44,13 +44,23 @@ public class TitleDB implements ITitleDAO {
     }
 
     @Override
-    public void editTopic(Title title) {
+    public void editTitle(Title title) {
+        Optional<Title> titleBox = getTitleById(title.getId());
+        if(titleBox.isPresent()){
+         titleBox.get().setName(title.getName());
+        }else{
+            System.out.println("pusty title box");
+        }
 
     }
 
     @Override
-    public void removeTitle(Title title) {
-
+    public void removeTitle(int id) {
+        Optional<Title> titleBox = getTitleById(id);
+        if(titleBox.isPresent()){
+            this.postDAO.removePostByTitleId(id);
+            this.titles.remove(titleBox.get());
+        }
     }
 
     @Override

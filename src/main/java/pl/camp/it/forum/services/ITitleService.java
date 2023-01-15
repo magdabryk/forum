@@ -13,4 +13,6 @@ public interface ITitleService {
     Optional<Title> getTitleById(int id);
 
     void addTitle(Title title);
+    void removeTitle(int id);
+    void editTitle(Title title, int titleId);
 }

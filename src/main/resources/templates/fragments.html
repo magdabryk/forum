@@ -14,6 +14,7 @@
     <a href="/main" class="button">Strona Główna</a>
     <a th:if="${!sessionObject.isLogged()}" href="/login" class="button">Zaloguj</a>
     <a th:if="${sessionObject.isLogged()}" href="/logout" class="button">Wyloguj</a>
+    <a th:if="${sessionObject.isAdmin()}" href="/users" class="button">Użytkownicy</a>
     <p th:if="${sessionObject.isLogged()}"  class="button" th:text="${sessionObject.user.getLogin}"></p>
 </div>
 </body>

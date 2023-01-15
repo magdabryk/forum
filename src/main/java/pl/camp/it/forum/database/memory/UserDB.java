@@ -53,7 +53,7 @@ public class UserDB implements IUserDAO {
 
     @Override
     public List<User> getUserList() {
-        return null;
+        return users;
     }
 
     @Override
