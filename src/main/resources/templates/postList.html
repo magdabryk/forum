@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Forum dyskusyjne Klubu Dyskutantów</title>
+  <link rel="stylesheet" href="/common.css">
+</head>
+<body>
+<div th:replace="~{fragments.html :: logo}"></div>
+<div th:replace="~{fragments.html :: menu}"></div>
+
+
+<div id="content">
+    <div th:text="${titles.getName}"></div>
+    <div th:each="post : ${posts}">
+      <div class="post-data1">
+    <div th:text="${post.date}"></div>
+    <div th:text="${post.userId}"></div>
+      </div>
+    <div th:text="${post.content}" class="post-content"></div>
+
+    </div>
+    <a th:href="@{/post/add/{titleId}(titleId=${titles.getId})}" class="button">Dodaj post</a>
+</div>
+
+</body>
+</html>
