@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.camp.it.forum.exceptions.NotEnoughtPostException;
 import pl.camp.it.forum.model.Post;
 import pl.camp.it.forum.model.Title;
-import pl.camp.it.forum.sequence.IPostIdSequence;
 import pl.camp.it.forum.sequence.ITitleIdSequence;
 import pl.camp.it.forum.services.IPostService;
 import pl.camp.it.forum.services.ITitleService;
@@ -26,8 +24,6 @@ public class PostController {
     @Autowired
     ITitleService titleService;
 
-    @Autowired
-    ITitleIdSequence titleIdSequence;
 
 
     @RequestMapping(path = "/post/show/{titleId}", method = RequestMethod.GET)
@@ -51,10 +47,8 @@ public class PostController {
     }
 
     @RequestMapping(path = "/title/add/", method = RequestMethod.POST)
-    public String addTitle1(@ModelAttribute Title title, @ModelAttribute Post post) {
-        title.setId(this.titleIdSequence.getId());
-        this.postService.addPost(post, title.getId(), this.sessionObject.getUser().getId());
-        this.titleService.addTitle(title);
+    public String addTitle(@ModelAttribute Title title, @ModelAttribute Post post) {
+        this.titleService.addTitle(title, post, this.sessionObject.getUser().getId());
         return "redirect:/";
     }
 

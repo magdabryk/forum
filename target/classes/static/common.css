@@ -1,7 +1,7 @@
 /*zielony : #1f9a2e
 niebieski: #0d6ca3  */
 
-#logo {
+#logo { /*jest */
     height: 300px;
     text-align: center;
     color: #0d6ca3;
@@ -9,24 +9,27 @@ niebieski: #0d6ca3  */
 
 }
 
-#logo img {
-
+#logo img {  /*jest */
     height:100px;
     margin: 50px 50px;
     text-align: left;
     padding: 10px 10px;
 }
 
-#menu{
+#menu{   /*jest */
     text-align: center;
     margin-top: 25px;
 }
 
-.button {
+#menu p {   /*jest */
+display: inline-block;
+}
+
+.button {  /*jest */
     text-decoration: none;
     color: #1f9a2e;
     font-size: 22px;
-    margin: 0 10px;
+    margin: 7px 10px;
     border: 2px solid #1f9a2e;
     border-radius: 10px;
     padding: 2px 15px;
@@ -39,69 +42,57 @@ niebieski: #0d6ca3  */
     background-color: white;
 }
 
-.button:hover {
+.button:hover {  /*jest */
     background-color: #0d6ca3;
     color: white;
 }
 
-#content {
+.title { /*jest */
+    display: inline-block;
+    text-decoration: none;
+    width: 96%;
+    color: #1f9a2e;
+    font-size: 22px;
+    margin: 10px auto;
+    border: 2px solid #1f9a2e;
+    padding: 2px;
 
-    width:80%;
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    -ms-transition: all 1s;
+
+    cursor: pointer;
+    background-color: white;
+}
+
+.title:hover { /*jest */
+    background-color: #0d6ca3;
+    color: white;
+}
+
+#content {  /*jest */
+    width:100%;
     text-align: center;
     border: 2px solid #0d6ca3;
-    padding: 5px 20px;
-    margin: 5px 50px;
+    margin: 10px auto;
 }
 
-#content div{
+
+
+
+#topic {   /*jest */
     text-align: center;
-    border: 1px solid #1f9a2e;
-    font-size: 20px;
     color: #0d6ca3;
-    margin: 5px 10px;
+    font-size: 25px;
 }
 
-#menu p {
-display: inline-block;
-}
-
-.title {
-    background: white !important;
-    display: inline-block;
+#add-title {
+    width:100%;
     text-align: center;
-    width: 96%;
+    border-top: 2px solid #0d6ca3;
+    margin-top: 30px ;
+    padding: 15px;
 }
 
-.title {
-    background: white !important;
-    display: inline-block;
-    text-align: center;
-}
 
-.post-content {
-    display: inline-block;
-    background: white !important;
-    text-align: left top;
 
-    width: 80%;
-
-}
-.post-data1 {
-display: inline-block;
-    width:15%;
-}
-
-.post-data {
-
-}
-
-#title {
-text-decoration: none;
-color: #1f9a2e;
-}
-
-.title-button {
-display: inline-block;
-text-align:left;
-    width:15%;
-}

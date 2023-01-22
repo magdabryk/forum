@@ -10,7 +10,7 @@ public interface IPostDAO {
     void addPost(Post post, int titleId, int userId);
     void editPost(Post post);
     void removePost(int id);
-    List<Post> getPostByTitle(String title);
+
     List<Post> getPostByTitleId(int titleId);
     void removePostByTitleId(int titleId);
     Optional<Post> getPostById(int id);

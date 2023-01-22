@@ -37,6 +37,8 @@ public class AuthenticatorServiceImpl implements IAuthenticatorService {
         this.sessionObject.setUser(null);
     }
 
+
+
     //todo weryfikacja login i hasło, imie i nazwisko
     //todo obsługa błędów usuwnie jedynego postu w temacie / blędne dane w loginie
     // todo JS

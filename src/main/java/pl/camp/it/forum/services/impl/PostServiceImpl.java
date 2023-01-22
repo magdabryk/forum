@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.camp.it.forum.database.IPostDAO;
 import pl.camp.it.forum.model.Post;
 import pl.camp.it.forum.services.IPostService;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,6 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     public void addPost(Post post, int titleId, int userId) {
-
         this.postDAO.addPost(post, titleId, userId);
     }
 

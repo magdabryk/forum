@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Forum dyskusyjne Klubu Dyskutantów</title>
-  <link rel="stylesheet" href="/common.css">
+    <meta charset="UTF-8">
+    <title>Forum dyskusyjne Klubu Dyskutantów</title>
+    <link rel="stylesheet" href="/post.css">
+    <link rel="stylesheet" href="/common.css">
+
 </head>
 <body>
 <div th:replace="~{fragments.html :: logo}"></div>
@@ -11,19 +13,24 @@
 
 
 <div id="content">
-    <div th:text="${titles.getName}"></div>
+    <div id="topic" th:text="${titles.getName}"></div>
+
     <div th:each="post : ${posts}">
-      <div class="post-data1">
-    <div th:text="${post.date}"></div>
-    <div th:text="${post.userId}"></div>
-      </div>
-    <div th:text="${post.content}" class="post-content"></div>
-        <a th:href="@{/post/edit/{postId}(postId=${post.getId})}" class="button">Edytuj post</a>
-        <a th:href="@{/post/remove/{postId}(postId=${post.getId})}" class="button">Usuń post</a>
-
+        <div>
+            <div class="post-data">
+                <p th:text="${post.date}"></p>
+                <p th:text="${post.userId}"></p>
+            </div>
+            <div th:text="${post.content}" class="post-content"></div>
+        </div>
+        <div>
+            <a th:if="${sessionObject.isModerator()}" th:href="@{/post/edit/{postId}(postId=${post.getId})}" class="button">Edytuj post</a>
+            <a th:if="${sessionObject.isModerator()}" th:href="@{/post/remove/{postId}(postId=${post.getId})}" class="button">Usuń post</a>
+        </div>
     </div>
-    <a th:href="@{/post/add/{titleId}(titleId=${titles.getId})}" class="button">Dodaj post</a>
-
+    <div th:if="${sessionObject.isLogged()}" id="add-title">
+        <a th:href="@{/post/add/{titleId}(titleId=${titles.getId})}" class="button">Dodaj post</a>
+    </div>
 </div>
 
 </body>

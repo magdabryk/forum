@@ -12,7 +12,7 @@ public interface ITitleService {
     List<Title> getTitle();
     Optional<Title> getTitleById(int id);
 
-    void addTitle(Title title);
+    void addTitle(Title title, Post post, int userId);
     void removeTitle(int id);
     void editTitle(Title title, int titleId);
 }

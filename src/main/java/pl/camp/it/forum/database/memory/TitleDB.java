@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+
 public class TitleDB implements ITitleDAO {
 
     @Autowired
@@ -38,7 +38,7 @@ public class TitleDB implements ITitleDAO {
     }
 
     @Override
-    public void addTitle(Title title) {
+    public void addTitle(Title title, Post post) {
         title.setPostList(this.postDAO.getPostByTitleId(title.getId()));
         this.titles.add(title);
     }

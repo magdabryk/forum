@@ -10,7 +10,6 @@ import pl.camp.it.forum.sequence.IUserIdSequence;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-@Repository
 public class UserDB implements IUserDAO {
 
     private final List<User> users = new ArrayList<>();
@@ -56,18 +55,10 @@ public class UserDB implements IUserDAO {
         return users;
     }
 
-    @Override
-    public void userSetRole(String roleStr, int id) {
-        Optional<User> userBox = getUserById(id);
-        if(userBox.isPresent()){
-            userBox.get().setRole(User.Role.valueOf(roleStr));
-        }
-    }
+
 
     @Override
     public void editUser(User user, String roleStr) {
-        userSetRole(roleStr, user.getId());
-        user.setPassword(DigestUtils.md5Hex(user.getPassword()));
-        addUser(user);
+
     }
 }

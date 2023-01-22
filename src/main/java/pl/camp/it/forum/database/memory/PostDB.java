@@ -10,7 +10,7 @@ import pl.camp.it.forum.sequence.IPostIdSequence;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Repository
+
 public class PostDB implements IPostDAO {
 
     @Autowired
@@ -66,10 +66,6 @@ public class PostDB implements IPostDAO {
         }
     }
 
-    @Override
-    public List<Post> getPostByTitle(String title) {
-        return null;
-    }
 
     @Override
     public List<Post> getPostByTitleId(int titleId) {

@@ -7,6 +7,7 @@ import pl.camp.it.forum.model.Post;
 import pl.camp.it.forum.model.Title;
 import pl.camp.it.forum.services.ITitleService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +33,10 @@ public class TitleServiceImpl implements ITitleService {
     }
 
     @Override
-    public void addTitle(Title title) {
-        this.titleDAO.addTitle(title);
+    public void addTitle(Title title,Post post, int userId) {
+        title.setUserId(userId);
+        title.setDate(LocalDateTime.now());
+        this.titleDAO.addTitle(title, post);
     }
 
     @Override

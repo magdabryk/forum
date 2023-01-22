@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.camp.it.forum.exceptions.LoginExsistException;
+import pl.camp.it.forum.exceptions.UserValidationException;
 import pl.camp.it.forum.model.User;
 import pl.camp.it.forum.services.IAuthenticatorService;
 import pl.camp.it.forum.services.IUserService;
 import pl.camp.it.forum.session.SessionObject;
+import pl.camp.it.forum.validator.UserValidator;
 
 @Controller
 public class AuthenticationController {
@@ -31,6 +34,13 @@ public class AuthenticationController {
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(@RequestParam String login, @RequestParam String password) {
+        try{
+            UserValidator.validateLogin(login);
+            UserValidator.validatePassword(password);
+        }catch (UserValidationException e){
+            e.printStackTrace();
+            return "redirect:/login";
+        }
         this.authenticatorService.authenticate(login, password);
         if (!this.sessionObject.isLogged()) {
             return "redirect:/login";
@@ -52,8 +62,17 @@ public class AuthenticationController {
     }
 
     @RequestMapping(path="/register", method = RequestMethod.POST)
-    public String register(@ModelAttribute User user, @RequestParam String roleStr){
-        this.userService.addUser(user);
+    public String register(@ModelAttribute User user, @RequestParam String password2){
+        try{
+            UserValidator.validateRegistration(user, password2);
+            this.userService.addUser(user);
+        }catch(UserValidationException e){
+            e.printStackTrace();
+            return "redirect:/register";
+        }catch (LoginExsistException e){
+            e.printStackTrace();
+            return "redirect:/register";
+        }
         return "redirect:/login";
     }
 }

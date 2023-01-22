@@ -11,7 +11,7 @@ public interface IUserDAO {
     Optional<User> getUserByLogin(String login);
     Optional<User> getUserById(int id);
     void addUser(User user);
-    void userSetRole(String roleStr, int id);
+
     List<User>  getUserList();
     void editUser(User user, String roleStr);
 }
