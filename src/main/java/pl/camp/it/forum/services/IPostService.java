@@ -11,4 +11,5 @@ public interface IPostService {
     Optional<Post> getPostById(int id);
     void editPost(Post post, int id);
     void removePost(int id);
+    Optional<Post> getLastPostByTitleId(int titleId);
 }

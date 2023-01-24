@@ -39,12 +39,10 @@ public class TitleDAOImpl implements ITitleDAO {
     @Override
     public void editTitle(Title title) {
     try{
-        String sql = "UPDATE ttitle SET name = ? , date = ?, user_id = ? WHERE id = ?;";
+        String sql = "UPDATE ttitle SET name = ? WHERE id = ?;";
         PreparedStatement ps = this.connection.prepareStatement(sql);
         ps.setString(1,title.getName());
-        ps.setTimestamp(2, Timestamp.valueOf(title.getDate()));
-        ps.setInt(3, title.getUserId());
-        ps.setInt(4, title.getId());
+        ps.setInt(2, title.getId());
         ps.executeUpdate();
     } catch (SQLException e) {
         throw new RuntimeException(e);

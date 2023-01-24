@@ -47,4 +47,9 @@ public class PostServiceImpl implements IPostService {
     public void removePost(int id) {
         this.postDAO.removePost(id);
     }
+
+    @Override
+    public Optional<Post> getLastPostByTitleId(int titleId) {
+        return postDAO.getLastPostByTitleId(titleId);
+    }
 }

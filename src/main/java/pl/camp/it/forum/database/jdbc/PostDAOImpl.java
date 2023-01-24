@@ -59,13 +59,10 @@ public class PostDAOImpl implements IPostDAO {
     @Override
     public void editPost(Post post) {
     try{
-        String sql = "UPDATE tpost SET date =?, user_id=?, content=?, title_id=? WHERE id = ?;";
+        String sql = "UPDATE tpost SET  content=?  WHERE id = ?;";
         PreparedStatement ps  = this.connection.prepareStatement(sql);
-        ps.setTimestamp(1, Timestamp.valueOf(post.getDate()));
-        ps.setInt(2,post.getUserId());
-        ps.setString(3, post.getContent());
-        ps.setInt(4, post.getTitleId());
-        ps.setInt(5,post.getId());
+        ps.setString(1, post.getContent());
+        ps.setInt(2,post.getId());
         ps.executeUpdate();
     } catch (SQLException e) {
         throw new RuntimeException(e);
@@ -127,6 +124,28 @@ public class PostDAOImpl implements IPostDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
+                return Optional.of(new Post(
+                        rs.getInt("id"),
+                        rs.getTimestamp("date").toLocalDateTime(),
+                        rs.getInt("user_id"),
+                        rs.getString("content"),
+                        rs.getInt("title_id")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Post> getLastPostByTitleId(int titleId) {
+        try{
+            String sql = "SELECT * FROM tpost WHERE title_id = ? ORDER BY date DESC LIMIT 1;";
+            PreparedStatement ps = this.connection.prepareStatement(sql);
+            ps.setInt(1, titleId);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
                 return Optional.of(new Post(
                         rs.getInt("id"),
                         rs.getTimestamp("date").toLocalDateTime(),

@@ -14,24 +14,39 @@
 
 <div id="content">
     <div id="topic" th:text="${titles.getName}"></div>
-
-    <div th:each="post : ${posts}">
-        <div>
-            <div class="post-data">
-                <p th:text="${post.date}"></p>
-                <p th:text="${post.userId}"></p>
+    <th:block th:if="${sessionObject.isLogged()}">
+        <div th:each="post : ${posts}">
+            <div>
+                <div class="post-data">
+                    <p th:text="${post.date}"></p>
+                    <p th:text="${post.userId}"></p>
+                </div>
+                <div th:text="${post.content}" class="post-content"></div>
             </div>
-            <div th:text="${post.content}" class="post-content"></div>
+            <div>
+                <a th:if="${sessionObject.isLogged() && (sessionObject.isModerator() || post.userId == sessionObject.user.getId )}"
+                   th:href="@{/post/edit/{postId}(postId=${post.getId})}" class="button">Edytuj post</a>
+                <a th:if="${sessionObject.isModerator()}" th:href="@{/post/remove/{postId}(postId=${post.getId})}"
+                   class="button">Usuń post</a>
+            </div>
         </div>
+    </th:block>
+    <th:block th:if="${!sessionObject.isLogged()}">
         <div>
-            <a th:if="${sessionObject.isModerator()}" th:href="@{/post/edit/{postId}(postId=${post.getId})}" class="button">Edytuj post</a>
-            <a th:if="${sessionObject.isModerator()}" th:href="@{/post/remove/{postId}(postId=${post.getId})}" class="button">Usuń post</a>
+            <div>
+                <div class="post-data">
+                    <p th:text="${lastPost.getDate}"></p>
+                    <p th:text="${lastPost.getUserId}"></p>
+                </div>
+                <div th:text="${lastPost.getContent}" class="post-content"></div>
+            </div>
         </div>
-    </div>
+    </th:block>
     <div th:if="${sessionObject.isLogged()}" id="add-title">
         <a th:href="@{/post/add/{titleId}(titleId=${titles.getId})}" class="button">Dodaj post</a>
     </div>
 </div>
+
 
 </body>
 </html>

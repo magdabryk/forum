@@ -108,4 +108,9 @@ public class PostDB implements IPostDAO {
         }
         return Optional.empty();
     }
+
+    @Override
+    public Optional<Post> getLastPostByTitleId(int titleId) {
+        return Optional.empty();
+    }
 }

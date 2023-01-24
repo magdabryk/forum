@@ -33,6 +33,7 @@ public class PostController {
             return "redirect:/";
         }
         model.addAttribute("posts", this.postService.getPostByTitleId(titleId));
+        model.addAttribute("lastPost", this.postService.getLastPostByTitleId(titleId).get());
         model.addAttribute("titles", titleBox.get());
         model.addAttribute("sessionObject", this.sessionObject);
         return "postList";
@@ -91,7 +92,7 @@ public class PostController {
 
     @RequestMapping(path = "/post/edit/{postId}", method = RequestMethod.POST)
     public String editPost(@ModelAttribute Post post, @PathVariable int postId){
-    this.postService.editPost(post, postId);
+        this.postService.editPost(post, postId);
         return "redirect:/";
     }
 

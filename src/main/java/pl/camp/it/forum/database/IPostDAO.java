@@ -14,5 +14,6 @@ public interface IPostDAO {
     List<Post> getPostByTitleId(int titleId);
     void removePostByTitleId(int titleId);
     Optional<Post> getPostById(int id);
+    Optional<Post> getLastPostByTitleId(int titleId);
 
 }
